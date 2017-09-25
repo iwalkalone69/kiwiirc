@@ -526,14 +526,14 @@ const state = new Vue({
                 network.services = serverInfo.services;
             }
 
+            let eventObj = { network };
+            state.$emit('network.new', eventObj);
+
             this.networks.push(network);
             initialiseNetworkState(network);
 
             // Add the server server buffer
             this.addBuffer(network.id, '*').joined = true;
-
-            let eventObj = { network };
-            state.$emit('network.new', eventObj);
 
             return network;
         },
