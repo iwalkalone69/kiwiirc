@@ -4,21 +4,21 @@
             <form class="u-form">
                 <b>{{$t('settings_notify')}}: </b><br />
                 <label>
-                    <span>{{$t('settings_notify_all')}}</span>
                     <input type="radio" name="alert_on" value="message" v-model="settingAlertOn">
+                    <span>{{$t('settings_notify_all')}}</span>
                 </label><br />
                 <label>
-                    <span>{{$t('settings_notify_mentioned')}}</span>
                     <input type="radio" name="alert_on" value="highlight" v-model="settingAlertOn">
+                    <span>{{$t('settings_notify_mentioned')}}</span>
                 </label><br />
                 <label>
-                    <span>{{$t('settings_notify_never')}}</span>
                     <input type="radio" name="alert_on" value="never" v-model="settingAlertOn">
+                    <span>{{$t('settings_notify_never')}}</span>
                 </label><br />
 
                 <label>
-                    <span>{{$t('settings_notify_mute')}}</span>
                     <input type="checkbox" v-model="settingMuteSound">
+                    <span>{{$t('settings_notify_mute')}}</span>
                 </label><br />
             </form>
         </div>
