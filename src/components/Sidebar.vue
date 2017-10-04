@@ -6,7 +6,7 @@
                 <span v-if="sidebarIsWide" class="kiwi-sidebar-options" @click="sidebarIsWide=false">
                     {{$t('close')}} <i class="fa fa-caret-right" aria-hidden="true"></i>
                 </span>
-                <span v-else class="kiwi-sidebar-options" @click="settings_open = !settings_open">
+                <span v-else class="kiwi-sidebar-options" @click="toggleSettings()">
                     <i class="fa fa-cog" aria-hidden="true"></i> {{$t('side_options')}}
                 </span>
 
@@ -17,7 +17,7 @@
                 >
 
                     <tabbed-view>
-                        <tabbed-tab :header="$t('settings')" :focus="true">
+                        <tabbed-tab :header="$t('settings')" :focus="tab == 'settings'">
                             <channel-info v-bind:buffer="buffer"></channel-info>
 
                             <div class="kiwi-sidebar-settings">
@@ -27,10 +27,10 @@
                                 <label><input type="checkbox" v-model="settingColouredNicklist"> {{$t('side_colours')}}</label>
                             </div>
                         </tabbed-tab>
-                        <tabbed-tab :header="$t('banned')">
+                        <tabbed-tab :header="$t('banned')" :focus="tab == 'banned'">
                             <channel-banlist v-bind:buffer="buffer"></channel-banlist>
                         </tabbed-tab>
-                        <tabbed-tab :header="$t('notifications')">
+                        <tabbed-tab :header="$t('notifications')" :focus="tab == 'notifications'">
                             <buffer-settings v-bind:buffer="buffer"></buffer-settings>
                         </tabbed-tab>
                     </tabbed-view>
@@ -90,6 +90,7 @@ export default {
         return {
             settings_open: false,
             userbox_user: null,
+            tab: 'settings',
         };
     },
     props: ['network', 'buffer', 'users'],
@@ -146,8 +147,16 @@ export default {
         },
     },
     methods: {
+        toggleSettings: function toggleSettings() {
+            this.tab = 'settings';
+            this.settings_open = !this.settings_open;
+        },
     },
     created: function created() {
+        this.listen(state, 'sidebar.show', (tab) => {
+            this.tab = tab;
+            this.settings_open = true;
+        });
         this.listen(state, 'sidebar.hide', () => {
             this.settings_open = false;
         });

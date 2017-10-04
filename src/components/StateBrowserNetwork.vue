@@ -50,7 +50,7 @@
 
                     <div
                         class="kiwi-statebrowser-channel-settings"
-                        @click.stop="$emit('showBufferSettings', buffer, $event.clientY)"
+                        @click="openSettings(buffer)"
                     >
                         <i class="fa fa-bell-o" aria-hidden="true"></i>
                     </div>
@@ -88,7 +88,6 @@
 import _ from 'lodash';
 import state from 'src/libs/state';
 import * as Misc from 'src/helpers/Misc';
-import BufferSettings from './BufferSettings';
 
 export default {
     data: function data() {
@@ -99,10 +98,13 @@ export default {
         };
     },
     props: ['network'],
-    components: {
-        BufferSettings,
-    },
     methods: {
+        openSettings: function openSettings(buffer) {
+            if (!this.isActiveBuffer(buffer)) {
+                this.setActiveBuffer(buffer);
+            }
+            state.$emit('sidebar.show', 'notifications');
+        },
         setActiveBuffer: function switchContainer(buffer) {
             // Clear any active component to show the buffer again
             state.$emit('active.component', null);
