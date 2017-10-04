@@ -1,7 +1,7 @@
 <template>
     <div class="kiwi-sidebar" :class="{'kiwi-sidebar--wide': sidebarIsWide}">
         <template v-if="buffer">
-            <template v-if="buffer.isChannel()">
+            <template v-if="buffer.isChannel() || buffer.isQuery()">
 
                 <span v-if="sidebarIsWide" class="kiwi-sidebar-options" @click="sidebarIsWide=false">
                     {{$t('close')}} <i class="fa fa-caret-right" aria-hidden="true"></i>
@@ -17,7 +17,8 @@
                 >
 
                     <tabbed-view>
-                        <tabbed-tab :header="$t('settings')" :focus="tab == 'settings'">
+                        <tabbed-tab :header="$t('settings')" :focus="tab == 'settings'"
+                            v-if="buffer.isChannel()">
                             <channel-info v-bind:buffer="buffer"></channel-info>
 
                             <div class="kiwi-sidebar-settings">
@@ -27,7 +28,8 @@
                                 <label><input type="checkbox" v-model="settingColouredNicklist"> {{$t('side_colours')}}</label>
                             </div>
                         </tabbed-tab>
-                        <tabbed-tab :header="$t('banned')" :focus="tab == 'banned'">
+                        <tabbed-tab :header="$t('banned')" :focus="tab == 'banned'"
+                            v-if="buffer.isChannel()">
                             <channel-banlist v-bind:buffer="buffer"></channel-banlist>
                         </tabbed-tab>
                         <tabbed-tab :header="$t('notifications')" :focus="tab == 'notifications'">
@@ -148,11 +150,12 @@ export default {
     },
     methods: {
         toggleSettings: function toggleSettings() {
-            this.tab = 'settings';
+            this.tab = this.buffer.isChannel() ? 'settings' : 'notifications';
             this.settings_open = !this.settings_open;
         },
     },
     created: function created() {
+        this.tab = this.buffer.isChannel() ? 'settings' : 'notifications';
         this.listen(state, 'sidebar.show', (tab) => {
             this.tab = tab;
             this.settings_open = true;

@@ -8,7 +8,7 @@
         <template v-if="buffer">
             <div @click.stop="toggleStateBrowser" class="kiwi-container-toggledraw-statebrowser">
                 <i v-if="!unreadMessages.count" class="fa fa-bars" aria-hidden="true"></i>
-                <div 
+                <div
                     v-else
                     class="kiwi-container-toggledraw-statebrowser-messagecount"
                     :class="{'kiwi-container-toggledraw-statebrowser-messagecount--highlight': unreadMessages.highlight}"
@@ -27,7 +27,7 @@
             </template>
             <template v-else>
                 <sidebar
-                    v-if="buffer.isChannel()"
+                    v-if="buffer.isChannel() || buffer.isQuery()"
                     :network="network"
                     :buffer="buffer"
                     :users="users"
