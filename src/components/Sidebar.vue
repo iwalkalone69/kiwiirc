@@ -17,7 +17,7 @@
                 >
 
                     <tabbed-view>
-                        <tabbed-tab :header="$t('settings')" :focus="tab == 'settings'"
+                        <tabbed-tab :header="$t('settings')" :focus="tab === 'settings'"
                             v-if="buffer.isChannel()">
                             <channel-info v-bind:buffer="buffer"></channel-info>
 
@@ -28,11 +28,11 @@
                                 <label><input type="checkbox" v-model="settingColouredNicklist"> {{$t('side_colours')}}</label>
                             </div>
                         </tabbed-tab>
-                        <tabbed-tab :header="$t('banned')" :focus="tab == 'banned'"
+                        <tabbed-tab :header="$t('banned')" :focus="tab === 'banned'"
                             v-if="buffer.isChannel()">
                             <channel-banlist v-bind:buffer="buffer"></channel-banlist>
                         </tabbed-tab>
-                        <tabbed-tab :header="$t('notifications')" :focus="tab == 'notifications'">
+                        <tabbed-tab :header="$t('notifications')" :focus="tab === 'notifications'">
                             <buffer-settings v-bind:buffer="buffer"></buffer-settings>
                         </tabbed-tab>
                     </tabbed-view>
